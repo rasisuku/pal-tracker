@@ -29,7 +29,7 @@ public class TimeEntryControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        TimeEntry timeEntryToCreate = new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8);
+        TimeEntry timeEntryToCreate = new TimeEntry(1L,123L, 456L, LocalDate.parse("2017-01-08"), 8);
         TimeEntry expectedResult = new TimeEntry(1L, 123L, 456L, LocalDate.parse("2017-01-08"), 8);
         doReturn(expectedResult)
             .when(timeEntryRepository)
@@ -101,9 +101,9 @@ public class TimeEntryControllerTest {
     public void testUpdate_NotFound() throws Exception {
         doReturn(null)
             .when(timeEntryRepository)
-            .update(eq(1L), any(TimeEntry.class));
+            .update(eq(15664L), any(TimeEntry.class));
 
-        ResponseEntity response = controller.update(1L, new TimeEntry());
+        ResponseEntity response = controller.update(14345L, new TimeEntry());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
