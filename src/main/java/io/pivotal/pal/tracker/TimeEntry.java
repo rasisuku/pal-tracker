@@ -25,6 +25,11 @@ public class TimeEntry {
     private long projectId;
     private long userId;
     private LocalDate date;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     private int hours;
 
     public long getId() {

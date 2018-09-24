@@ -23,6 +23,7 @@ public class JdbcTimeEntryRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
+
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
 
@@ -131,13 +132,13 @@ public class JdbcTimeEntryRepositoryTest {
             "INSERT INTO time_entries (id, project_id, user_id, date, hours) " +
                 "VALUES (1000, 123, 321, '2017-01-09', 8)");
 
-        TimeEntry updatedTimeEntry = new TimeEntry(456, 322, LocalDate.parse("2017-01-10"), 10);
+        TimeEntry updatedTimeEntry = new TimeEntry(1000L, 456, 322, LocalDate.parse("2017-01-10"), 10);
 
         TimeEntry timeEntry = subject.update(1000L, updatedTimeEntry);
 
         Map<String, Object> foundEntry = jdbcTemplate.queryForMap("Select * from time_entries where id = ?", timeEntry.getId());
 
-        assertThat(foundEntry.get("id")).isEqualTo(timeEntry.getId());
+        assertThat(foundEntry.get("id")).isEqualTo(updatedTimeEntry.getId());
         assertThat(foundEntry.get("project_id")).isEqualTo(456L);
         assertThat(foundEntry.get("user_id")).isEqualTo(322L);
         assertThat(((Date)foundEntry.get("date")).toLocalDate()).isEqualTo(LocalDate.parse("2017-01-10"));
